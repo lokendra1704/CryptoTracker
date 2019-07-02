@@ -26,25 +26,36 @@ public class Example {
     public static void main(String[] args) {
 
         String uri = "";
-        List<NameValuePair> paratmers = new ArrayList<NameValuePair>();
+        List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+        ArrayList<String> coins = new ArrayList<String>();
 
-        System.out.println("Enter 0 for all and 1 for selected");
+        System.out.println("Enter 0 for all and 1 for Custom");
         int choice = sc.nextInt();
         if (choice == 0) {
             uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
-            paratmers.add(new BasicNameValuePair("start", "1"));
-            paratmers.add(new BasicNameValuePair("limit", "5000"));
-
+            parameters.add(new BasicNameValuePair("start", "1"));
+            parameters.add(new BasicNameValuePair("limit", "5000"));
         } else if (choice == 1) {
+            System.out.println("Enter coin symbol or -1 to Stop");
+            String coin;
+            while (!(coin = sc.next()).equals(new String("-1"))) {
+                System.out.println("Enter coin symbol or -1 to Stop");
+                coins.add(coin);
+            }
+            String sym = coins.get(0);
+            for (int i = 1; i < coins.size(); i++) {
+                sym += "," + coins.get(i);
+            }
             uri = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest";
-            System.out.println("Enter which Cryptocurrency rate in form BTC,ETH");
-            String symbol = sc.next();
-            paratmers.add(new BasicNameValuePair("symbol", symbol));
+            // System.out.println("Enter which Cryptocurrency rate in form BTC,ETH");
+            // String symbol = sc.next();
+            parameters.add(new BasicNameValuePair("symbol", sym));
         }
-        paratmers.add(new BasicNameValuePair("convert", "INR"));
+
+        parameters.add(new BasicNameValuePair("convert", "INR"));
         String result;
         try (FileOutputStream fos = new FileOutputStream("data.json");) {
-            result = makeAPICall(uri, paratmers);
+            result = makeAPICall(uri, parameters);
             // System.out.println(result);
             fos.write(result.getBytes());
         } catch (IOException e) {
