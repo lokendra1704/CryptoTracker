@@ -42,8 +42,9 @@ public class Example {
             paratmers.add(new BasicNameValuePair("symbol", symbol));
         }
         paratmers.add(new BasicNameValuePair("convert", "INR"));
+        String result;
         try (FileOutputStream fos = new FileOutputStream("data.json");) {
-            String result = makeAPICall(uri, paratmers);
+            result = makeAPICall(uri, paratmers);
             // System.out.println(result);
             fos.write(result.getBytes());
         } catch (IOException e) {
