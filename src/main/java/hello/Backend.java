@@ -18,7 +18,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Backend {
     private static String apiKey = "1c216659-d074-4c95-875c-e312a07ab25c";
-    private static Scanner sc = new Scanner(System.in);
     private static String uri = "";
     private static ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
 
